@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Proposal for Rashila</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        .container {
+            text-align: center;
+            position: relative;
+        }
+        .gift-box {
+            width: 200px;
+            height: 200px;
+            background: black;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.5s ease;
+            margin: 20px auto;
+            position: relative;
+        }
+        .gift-box:hover {
+            transform: scale(1.1);
+        }
+        .gift-box.open {
+            animation: openBox 1s ease-in-out forwards;
+        }
+        @keyframes openBox {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+        .text {
+            font-size: 24px;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 1s forwards;
+        }
+        .question {
+            font-size: 28px;
+            margin: 20px 0;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 2s forwards;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 3s forwards;
+        }
+        .yes-btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.8);
+            transition: transform 0.3s ease;
+        }
+        .yes-btn:hover {
+            transform: scale(1.1);
+        }
+        .no-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .no-btn:hover {
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .tease-text {
+            position: absolute;
+            font-size: 16px;
+            color: #f39c12;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .tease-text.show {
+            opacity: 1;
+        }
+        .animation-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .animation-overlay.show {
+            display: flex;
+        }
+        .fireworks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            font-size: 50px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .final-message {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .options {
+            margin-top: 20px;
+        }
+        .options button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Confetti and emojis */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            animation: fall 2s linear infinite;
+        }
+        @keyframes fall {
+            from { transform: translateY(-100vh); }
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <audio id="romantic-music" loop>
+        <source src="https://www.example.com/romantic-song.mp3" type="audio/mpeg">
+        <!-- Replace with a real URL, e.g., a free romantic track -->
+    </audio>
+    
+    <div class="container">
+        <div class="text">Rashila ❤️ this box is only for you…</div>
+        <div class="gift-box" id="gift-box"></div>
+        <div class="question" id="question" style="display: none;">Will you be my Valentine? 💘</div>
+        <div class="buttons" id="buttons" style="display: none;">
+            <button class="yes-btn" id="yes-btn">YES ❤️</button>
+            <button class="no-btn" id="no-btn">NO 🙃</button>
+            <div class="tease-text" id="tease-text">Hey! That tickles 😆 Try again…</div>
+        </div>
+    </div>
+    
+    <div class="animation-overlay" id="animation-overlay">
+        <div class="final-message">
+            <div>YAY! You just made my heart yours 💕<br>Happy Valentine’s Day, Rashila ❤️</div>
+            <div class="options">
+                <button onclick="replay()">Replay</button>
+                <button onclick="shareLink()">Share Link</button>
+            </div>
+        </div>
+        <div class="fireworks" id="fireworks"></div>
+    </div>
+
+    <script>
+        const giftBox = document.getElementById('gift-box');
+        const question = document.getElementById('question');
+        const buttons = document.getElementById('buttons');
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const teaseText = document.getElementById('tease-text');
+        const overlay = document.getElementById('animation-overlay');
+        const fireworks = document.getElementById('fireworks');
+        const music = document.getElementById('romantic-music');
+
+        // Play music softly
+        music.volume = 0.3;
+        music.play().catch(() => {}); // Autoplay may be blocked
+
+        // Open box on click
+        giftBox.addEventListener('click', () => {
+            giftBox.classList.add('open');
+            setTimeout(() => {
+                // Add rose petals, sparkles, hearts (simulated with emojis)
+                for (let i = 0; i < 20; i++) {
+                    const heart = document.createElement('div');
+                    heart.textContent = '❤️';
+                    heart.className = 'heart';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 3000);
+                }
+                question.style.display = 'block';
+                buttons.style.display = 'flex';
+            }, 1000);
+        });
+
+        // NO button behavior
+        noBtn.addEventListener('mouseenter', () => {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            teaseText.style.left = x + 'px';
+            teaseText.style.top = (y - 30) + 'px';
+            teaseText.classList.add('show');
+            setTimeout(() => teaseText.classList.remove('show'), 2000);
+        });
+
+        // YES button behavior
+        yesBtn.addEventListener('click', () => {
+            overlay.classList.add('show');
+            // Add confetti
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.background = ['red', 'pink', 'yellow'][Math.floor(Math.random() * 3)];
+                fireworks.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2000);
+            }
+            // Transform box to heart (simulate)
+            giftBox.style.background = 'red';
+            giftBox.innerHTML = 'Rashila ❤️';
+            giftBox.style.fontSize = '24px';
+            giftBox.style.display = 'flex';
+            giftBox.style.alignItems = 'center';
+            giftBox.style.justifyContent = 'center';
+        });
+
+        // Replay function
+        function replay() {
+            location.reload();
+        }
+
+        // Share link function
+        function shareLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link copied to clipboard! Share it with Rashila ❤️');
+            });
+        }
+    </script>
+</body>
+</html>
